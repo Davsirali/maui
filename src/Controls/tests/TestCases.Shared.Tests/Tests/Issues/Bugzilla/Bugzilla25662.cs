@@ -1,28 +1,21 @@
-#if ANDROID
 using NUnit.Framework;
-using OpenQA.Selenium.Appium;
 using UITest.Appium;
 using UITest.Core;
-
-namespace Microsoft.Maui.TestCases.Tests.Issues;
-
-public class Bugzilla25662 : _IssuesUITest
+namespace Microsoft.Maui.TestCases.Tests.Issues
 {
-    public Bugzilla25662(TestDevice testDevice) : base(testDevice)
-    {
-    }
-
-    public override string Issue => "Setting IsEnabled does not disable SwitchCell";
-
-	[Test]
-	[Category(UITestCategories.Cells)]
-	[FailsOnIOSWhenRunningOnXamarinUITest]
-	[FailsOnWindowsWhenRunningOnXamarinUITest]
-	public void Bugzilla25662Test()
+	public class Bugzilla25662 : _IssuesUITest
 	{
-		App.WaitForElement("One");
-		App.Tap("One");
-		App.WaitForNoElement("FAIL");
+		public Bugzilla25662(TestDevice testDevice) : base(testDevice)
+		{
+		}
+		public override string Issue => "Setting IsEnabled does not disable SwitchCell";
+		[Test]
+		[Category(UITestCategories.Cells)]
+		public void Bugzilla25662Test()
+		{
+			App.WaitForElement("OneLabel");
+			App.Tap("OneLabel");
+			App.WaitForNoElement("FAIL");
+		}
 	}
 }
-#endif
