@@ -8,6 +8,24 @@ public class Bugzilla57317 : TestContentPage
 	{
 		var tableView = new TableView();
 		var tableSection = new TableSection();
+
+		// Create a custom ViewCell to hold the TextCell and labels
+		var viewCell = new ViewCell();
+		var stackLayout = new StackLayout();
+
+		var cellLabel = new Label
+		{
+			Text = "Cell Label",
+			AutomationId = "CellLabel"
+		};
+
+		var menuItemLabel = new Label
+		{
+			Text = "Self-Deleting item Label",
+			AutomationId = "SelfDeletingItemLabel"
+		};
+
+		// Create a TextCell
 		var switchCell = new TextCell
 		{
 			Text = "Cell",
@@ -21,7 +39,16 @@ public class Bugzilla57317 : TestContentPage
 			IsDestructive = true
 		};
 		switchCell.ContextActions.Add(menuItem);
-		tableSection.Add(switchCell);
+
+		// Add labels to the StackLayout
+		stackLayout.Children.Add(cellLabel);
+		stackLayout.Children.Add(menuItemLabel);
+
+		// Add the StackLayout to the ViewCell
+		viewCell.View = stackLayout;
+
+		// Add the ViewCell to the TableSection
+		tableSection.Add(viewCell);
 		tableView.Root.Add(tableSection);
 		Content = tableView;
 	}

@@ -47,6 +47,7 @@ namespace Maui.Controls.Sample.Issues
 			var items2 = Enumerable.Range(10, 19).Select(i => new Item { Text = $"Item {i}", AutomationId = $"Item_{i}" }).ToList();
 			var items3 = Enumerable.Range(20, 29).Select(i => new Item { Text = $"Item {i}", AutomationId = $"Item_{i}" }).ToList();
 
+
 			var listView = new ListView
 			{
 				ItemTemplate = new DataTemplate(typeof(AccessoryViewCellWithContextActions)),

@@ -15,16 +15,16 @@ public class Bugzilla57317 : _IssuesUITest
 
 	public override string Issue => "Modifying Cell.ContextActions can crash on Android";
 
-	// [Test]
-	// [Category(UITestCategories.TableView)]
-	// [FailsOnIOSWhenRunningOnXamarinUITest]
-	// public void Bugzilla57317Test()
-	// {
-	// 	App.WaitForFirstElement("Cell");
+	[Test]
+	[Category(UITestCategories.TableView)]
+	public void Bugzilla57317Test()
+	{
+		App.WaitForFirstElement("CellLabel");
 
-	// 	App.ActivateContextMenu("Cell");
+		// Perform a long press to activate the context menu
+		App.TouchAndHold("CellLabel");
 
-	// 	App.WaitForFirstElement("Self-Deleting item");
-	// 	App.Tap(c => c.Marked("Self-Deleting item"));
-	// }
+		App.WaitForFirstElement("SelfDeletingItemLabel");
+		App.Tap("SelfDeletingItemLabel");
+	}
 }

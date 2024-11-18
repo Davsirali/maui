@@ -27,7 +27,7 @@ namespace Microsoft.Maui.TestCases.Tests.Issues
 			App.WaitForElement(BtnScrollToExistentItem);
 
 			App.Tap(BtnScrollToNonExistentItem);
-			App.WaitForNoElement(FirstListItem);
+			App.WaitForNoElement(FirstListItem);   
 
 			App.Tap(BtnScrollToExistentItem);
 			App.WaitForNoElement(MiddleListItem);
