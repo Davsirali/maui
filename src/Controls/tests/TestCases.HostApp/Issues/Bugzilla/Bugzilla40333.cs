@@ -70,7 +70,12 @@ public class Bugzilla40333 : TestNavigationPage
 
 				Content = new StackLayout()
 				{
-					Children = { new Label { Text = "Detail Text" }, openRoot }
+					Children =
+			{
+				new Label { Text = "Detail Text" },
+				openRoot,
+				
+			}
 				};
 			}
 		}
@@ -78,48 +83,45 @@ public class Bugzilla40333 : TestNavigationPage
 
 		public class _40333NavPusher : ContentPage
 		{
-			readonly ListView _listView = new ListView();
-
 			public _40333NavPusher(string title)
 			{
 				Title = title;
 
-				_listView.ItemTemplate = new DataTemplate(() =>
+				var clickThisLabel = new Label
 				{
-					var lbl = new Label();
-					lbl.SetBinding(Label.TextProperty, ".");
-					lbl.SetBinding(Label.AutomationIdProperty, ".");
-					lbl.AutomationId = lbl.Text;
+					Text = "Click This",
+					AutomationId = ClickThisId
+				};
 
-					var result = new ViewCell
-					{
-						View = new StackLayout
-						{
-							Orientation = StackOrientation.Horizontal,
-							Children =
-							{
-								lbl
-							}
-						}
-					};
-
-					return result;
-				});
-
-				_listView.ItemsSource = new[] { "1", ClickThisId, StillHereId };
-				_listView.ItemTapped += OnItemTapped;
-
-				Content = new StackLayout
+				var stillHereLabel = new Label
 				{
-					Children = { _listView }
+					Text = "Still Here",
+					AutomationId = StillHereId
+				};
+
+				var clickThisTapGestureRecognizer = new TapGestureRecognizer();
+				clickThisTapGestureRecognizer.Tapped += async (s, e) => await NavigateToNextPage(ClickThisId);
+
+				var stillHereTapGestureRecognizer = new TapGestureRecognizer();
+				stillHereTapGestureRecognizer.Tapped += async (s, e) => await NavigateToNextPage(StillHereId);
+
+				clickThisLabel.GestureRecognizers.Add(clickThisTapGestureRecognizer);
+				stillHereLabel.GestureRecognizers.Add(stillHereTapGestureRecognizer);
+
+				Content = new StackLayout()
+				{
+					Children =
+			{
+				clickThisLabel,
+				stillHereLabel
+			}
 				};
 			}
 
-			async void OnItemTapped(object sender, EventArgs e)
+			async Task NavigateToNextPage(string itemId)
 			{
 				var rootNav = ((FlyoutPage)this.Parent.Parent).Flyout.Navigation;
-
-				var newTitle = $"{Title}.{_listView.SelectedItem}";
+				var newTitle = $"{Title}.{itemId}";
 				await rootNav.PushAsync(new _40333NavPusher(newTitle));
 			}
 
