@@ -1,4 +1,4 @@
-﻿#if ANDROID
+﻿
 using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
@@ -13,18 +13,17 @@ public class Bugzilla42074 : _IssuesUITest
 
 	public override string Issue => "[Android] Clicking cancel on a TimePicker does not cause it to unfocus";
 
-	// [FailsOnAndroidWhenRunningOnXamarinUITest]
-	// [Test]
-	// [Category(UITestCategories.TimePicker)]
-	// public void TimePickerCancelShouldUnfocus()
-	// {
-	// 	App.Tap("TimePicker");
 
-	// 	App.Back();
-	// 	App.WaitForElement("focusbtn");
+	[Test]
+	[Category(UITestCategories.TimePicker)]
+	public void TimePickerCancelShouldUnfocus()
+	{
+		App.Tap("TimePicker");
 
-	// 	App.Tap("focusbtn");
-	// 	App.Back();
-	// }
+		App.Back();
+		App.WaitForElement("focusbtn");
+
+		App.Tap("focusbtn");
+		App.Back();
+	}
 }
-#endif
