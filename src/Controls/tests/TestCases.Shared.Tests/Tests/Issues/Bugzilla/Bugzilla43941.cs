@@ -11,33 +11,31 @@ public class Bugzilla43941 : _IssuesUITest
 	}
 
 	public override string Issue => "Memory leak with ListView's RecycleElement on iOS";
+	[Test]
+	[Category(UITestCategories.ListView)]
+	public void Bugzilla43941Test()
+	{
+		for (var n = 0; n < 10; n++)
+		{
+			App.WaitForElement("Push");
+			App.Tap("Push");
 
-	// [FailsOnAndroidWhenRunningOnXamarinUITest]
-	// [Test]
-	// [Category(UITestCategories.ListView)]
-	// public void Bugzilla43941Test()
-	// {
-	// 	for (var n = 0; n < 10; n++)
-	// 	{
-	// 		App.WaitForElement("Push");
-	// 		App.Tap("Push");
+			App.WaitForElement("ListView");
+			App.Tap("BackButton");
+		}
 
-	// 		App.WaitForElement("ListView");
-	// 		App.Back();
-	// 	}
+		// At this point, the counter can be any value, but it's most likely not zero.
+		// Invoking GC once is enough to clean up all garbage data and set counter to zero
+		App.WaitForElement("GC");
 
-	// 	// At this point, the counter can be any value, but it's most likely not zero.
-	// 	// Invoking GC once is enough to clean up all garbage data and set counter to zero
-	// 	App.WaitForElement("GC");
+		var i = 0;
+		while (!App.FindElement("counterlabel")?.GetText()?.Equals("Counter: 0",
+			StringComparison.OrdinalIgnoreCase) ?? false && i < 10)
+		{
+			i++;
+			Task.Delay(2000);
 
-	// 	var i = 0;
-	// 	while (!App.FindElement("counterlabel")?.GetText()?.Equals("Counter: 0",
-	// 		StringComparison.OrdinalIgnoreCase) ?? false && i < 10)
-	// 		{
-	// 			i++;
-	// 			Task.Delay(2000);
-
-	// 			App.Tap("GC");
-	// 		}
-	// }
+			App.Tap("GC");
+		}
+	}
 }

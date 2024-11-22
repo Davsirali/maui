@@ -25,11 +25,23 @@ public class ContentPage43941 : ContentPage
 		}
 
 		Title = "ContentPage43941";
-		Content = new ListView
+		Content = new StackLayout
 		{
-			HasUnevenRows = true,
-			ItemsSource = list,
-			AutomationId = "ListView"
+			Children =
+			{
+				new Button
+				{
+					Text = "Back",
+					AutomationId = "BackButton",
+					Command = new Command(async () => await Navigation.PopAsync())
+				},
+				new ListView
+				{
+					HasUnevenRows = true,
+					ItemsSource = list,
+					AutomationId = "ListView"
+				}
+			}
 		};
 	}
 
